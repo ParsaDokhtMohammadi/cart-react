@@ -1,6 +1,7 @@
 import React from 'react'
 import { useProducts } from '../../context/ProductsContext'
 import styles from "./ProductsPage.module.css"
+import Card from '../components/Card'
 const ProductsPage = () => {
   const products = useProducts()
 
@@ -9,7 +10,7 @@ const ProductsPage = () => {
       <div className={styles.products}>
         {products.length===0 && <p>loading</p>}
         {products?.map(product=>(
-          <p>{product.title}</p>
+          <Card key={product.id} product={product}/>
         ))}
       </div>
       <aside>
