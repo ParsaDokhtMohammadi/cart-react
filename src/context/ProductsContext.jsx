@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import { useState } from 'react'
 import { createContext } from 'react'
 import { api } from '../services/api'
+import { useContext } from 'react'
 
 const ProductContext = createContext()
 
@@ -24,6 +25,11 @@ const ProductsProvider = ({ children }) => {
       {children}
     </ProductContext.Provider>
   )
+}
+
+export const useProducts = ()=> {
+  const products = useContext(ProductContext)
+  return products
 }
 
 export default ProductsProvider
