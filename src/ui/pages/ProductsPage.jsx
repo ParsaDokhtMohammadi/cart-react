@@ -6,19 +6,31 @@ import Loader from '../components/Loader'
 import { ImSearch } from 'react-icons/im'
 import { useState } from 'react'
 import { FaListUl } from 'react-icons/fa'
+import { useEffect } from 'react'
 const ProductsPage = () => {
-  const [search, setSearch] = useState("")
   const products = useProducts()
+  const [search, setSearch] = useState("")
+  const [displayedProducts , setDisplayedProducts] = useState([])  
+  const [query,setQuery] = useState({})
+
+  useEffect(()=>{
+    setDisplayedProducts(products)
+  },[products])
+
+  useEffect(()=>{
+    console.log(query)
+  },[query])
+
 
   const searchHandler = () => {
-    console.log(search)
+    setQuery(query=>({...query,search}))
+
   }
   const categoryHandler = (e) => {
     const {tagName} = e.target
     const category = e.target.innerText.toLowerCase()
     if(tagName!=="LI") return
-    
-    
+    setQuery(query=>({...query,category}))
   }
 
   return (
@@ -31,8 +43,8 @@ const ProductsPage = () => {
       </div>
       <div className={styles.container}>
         <div className={styles.products}>
-          {products.length === 0 && <Loader />}
-          {products?.map(product => (
+          {displayedProducts.length === 0 && <Loader />}
+          {displayedProducts?.map(product => (
             <Card key={product.id} product={product} />
           ))}
         </div>
