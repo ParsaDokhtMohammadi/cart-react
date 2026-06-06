@@ -37,3 +37,9 @@ export const getInitialQuery = (searchParams) => {
     if (search) query.search = search
     return query
 }
+
+export const sumProducts = (products) => {
+    const itemsCounter = products.reduce((total,p)=>total+p.quantity,0)
+    const total = products.reduce((total,p)=>total+p.quantity*p.price,0).toFixed(2)
+    return {itemsCounter,total}
+}

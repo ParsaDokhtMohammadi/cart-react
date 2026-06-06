@@ -9,9 +9,9 @@ const Card = ({ product }) => {
     const {id,title,image,price} = product
     const shortenedTitle = shortenText(title)
     const [state,dispatch] = useCart()
-
+    console.log(state)
     const clickHandler = () => {
-        dispatch({type:"add",payload:product})
+        dispatch({type:"ADD_ITEM",payload:product})
     }
 
     return (
