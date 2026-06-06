@@ -10,6 +10,21 @@ export const searchProducts = (products,search)=>{
 }
 
 export const filterProducts = (products,category) => {
-    if(!category || category.category==="all") return products
-    return products.filter(product=>product.category.toLowerCase()===category.category)
+
+    if(!category)return products
+    return products.filter(product=>product.category.toLowerCase()===category)
+}
+
+export const createQueryObject = (currentQuery,newQuery) => {
+    if(newQuery.category ==="all"){
+        const {category, ...rest} = currentQuery
+        return rest
+    }
+    if(newQuery.search===""){
+        const {search,...rest} = currentQuery
+        return rest
+    }
+    return {
+        ...currentQuery,...newQuery
+    }
 }

@@ -7,33 +7,36 @@ import { ImSearch } from 'react-icons/im'
 import { useState } from 'react'
 import { FaListUl } from 'react-icons/fa'
 import { useEffect } from 'react'
-import { filterProducts, searchProducts } from '../../helpers/helper'
+import { createQueryObject, filterProducts, searchProducts } from '../../helpers/helper'
+import { useSearchParams } from 'react-router'
 const ProductsPage = () => {
   const products = useProducts()
   const [search, setSearch] = useState("")
   const [displayedProducts , setDisplayedProducts] = useState([])  
   const [query,setQuery] = useState({})
+  const [searchParams,setSearchParams] = useSearchParams()
 
   useEffect(()=>{
     setDisplayedProducts(products)
   },[products])
 
   useEffect(()=>{
+    setSearchParams(query)
     let finalProducts = searchProducts(products , query.search)
-    finalProducts = filterProducts(finalProducts,query)
+    finalProducts = filterProducts(finalProducts,query.category)
     setDisplayedProducts(finalProducts)
   },[query])
 
 
   const searchHandler = () => {
-    setQuery(query=>({...query,search}))
+    setQuery(query=>createQueryObject(query,{...query,search}))
 
   }
   const categoryHandler = (e) => {
     const {tagName} = e.target
     const category = e.target.innerText.toLowerCase()
     if(tagName!=="LI") return
-    setQuery(query=>({...query,category}))
+    setQuery(query=>createQueryObject(query,{...query,category}))
   }
 
   return (
