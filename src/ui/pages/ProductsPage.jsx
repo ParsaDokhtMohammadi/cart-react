@@ -7,6 +7,7 @@ import { ImSearch } from 'react-icons/im'
 import { useState } from 'react'
 import { FaListUl } from 'react-icons/fa'
 import { useEffect } from 'react'
+import { searchProducts } from '../../helpers/helper'
 const ProductsPage = () => {
   const products = useProducts()
   const [search, setSearch] = useState("")
@@ -18,7 +19,9 @@ const ProductsPage = () => {
   },[products])
 
   useEffect(()=>{
-    console.log(query)
+    let finalProducts = searchProducts(products , query.search)
+    console.log(finalProducts)
+    setDisplayedProducts(finalProducts)
   },[query])
 
 
@@ -37,9 +40,9 @@ const ProductsPage = () => {
     <>
       <div>
         <input type="text" value={search} onChange={(e) => setSearch(e.target.value.toLocaleLowerCase())}
-          onClick={searchHandler}
+          
           placeholder='search' />
-        <button><ImSearch /></button>
+        <button onClick={searchHandler}><ImSearch /></button>
       </div>
       <div className={styles.container}>
         <div className={styles.products}>
