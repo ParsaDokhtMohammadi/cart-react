@@ -7,43 +7,47 @@ import { ImSearch } from 'react-icons/im'
 import { useState } from 'react'
 import { FaListUl } from 'react-icons/fa'
 import { useEffect } from 'react'
-import { createQueryObject, filterProducts, searchProducts } from '../../helpers/helper'
+import { createQueryObject, filterProducts, getInitialQuery, searchProducts } from '../../helpers/helper'
 import { useSearchParams } from 'react-router'
 const ProductsPage = () => {
   const products = useProducts()
   const [search, setSearch] = useState("")
-  const [displayedProducts , setDisplayedProducts] = useState([])  
-  const [query,setQuery] = useState({})
-  const [searchParams,setSearchParams] = useSearchParams()
+  const [displayedProducts, setDisplayedProducts] = useState([])
+  const [query, setQuery] = useState({})
+  const [searchParams, setSearchParams] = useSearchParams()
 
-  useEffect(()=>{
+  useEffect(() => {
     setDisplayedProducts(products)
-  },[products])
+    const query=getInitialQuery(searchParams)
+    setQuery(query)
+    setSearch(query.search || "")
+    
+  }, [products])
 
-  useEffect(()=>{
+  useEffect(() => {
     setSearchParams(query)
-    let finalProducts = searchProducts(products , query.search)
-    finalProducts = filterProducts(finalProducts,query.category)
+    let finalProducts = searchProducts(products, query.search)
+    finalProducts = filterProducts(finalProducts, query.category)
     setDisplayedProducts(finalProducts)
-  },[query])
+  }, [query])
 
 
   const searchHandler = () => {
-    setQuery(query=>createQueryObject(query,{...query,search}))
+    setQuery(query => createQueryObject(query, { ...query, search }))
 
   }
   const categoryHandler = (e) => {
-    const {tagName} = e.target
+    const { tagName } = e.target
     const category = e.target.innerText.toLowerCase()
-    if(tagName!=="LI") return
-    setQuery(query=>createQueryObject(query,{...query,category}))
+    if (tagName !== "LI") return
+    setQuery(query => createQueryObject(query, { ...query, category }))
   }
 
   return (
     <>
       <div>
         <input type="text" value={search} onChange={(e) => setSearch(e.target.value.toLocaleLowerCase())}
-          
+
           placeholder='search' />
         <button onClick={searchHandler}><ImSearch /></button>
       </div>
