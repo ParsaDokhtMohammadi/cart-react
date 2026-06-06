@@ -7,7 +7,7 @@ import { ImSearch } from 'react-icons/im'
 import { useState } from 'react'
 import { FaListUl } from 'react-icons/fa'
 import { useEffect } from 'react'
-import { searchProducts } from '../../helpers/helper'
+import { filterProducts, searchProducts } from '../../helpers/helper'
 const ProductsPage = () => {
   const products = useProducts()
   const [search, setSearch] = useState("")
@@ -20,7 +20,7 @@ const ProductsPage = () => {
 
   useEffect(()=>{
     let finalProducts = searchProducts(products , query.search)
-    console.log(finalProducts)
+    finalProducts = filterProducts(finalProducts,query)
     setDisplayedProducts(finalProducts)
   },[query])
 
@@ -59,7 +59,7 @@ const ProductsPage = () => {
           <ul onClick={categoryHandler}>
             <li>All</li>
             <li>Electronics</li>
-            <li>Jwelery</li>
+            <li>Jewelery</li>
             <li>Men's Clothing</li>
             <li>Women's Clothing</li>
           </ul>
