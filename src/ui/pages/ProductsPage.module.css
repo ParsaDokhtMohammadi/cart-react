@@ -9,3 +9,16 @@
     flex-wrap: wrap;
     justify-content: space-between;
 }
+
+@media (max-width:940px) {
+    .container {
+        flex-direction: column-reverse;
+        justify-content: start;
+        align-items: center;
+        gap: 20px;
+    }
+    .products {
+        align-items: center;
+        justify-content: center;
+    }
+}

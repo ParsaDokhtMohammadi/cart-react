@@ -9,12 +9,12 @@ const CartSidebar = ({ state, clickHandler }) => {
             <div>
                 <TbChecklist />
                 <p>Total:</p>
-                <span>{state.total}</span>
+                <span>{state.total}$</span>
             </div>
             <div>
                 <FaHashtag />
                 <p>Quantity:</p>
-                <span>{state.quantity}</span>
+                <span>{state.itemsCounter}</span>
             </div>
             <div>
                 <BsPatchCheck />
