@@ -30,15 +30,15 @@ const reducer = (state,action) => {
                 ...sumProducts(newSelectedItems)
             }
         case "INCREASE":
-            const index = state.selectedItems.findIndex(i=>i.id===action.payload.id)
-            state.selectedItems[index].quantity++
+            const IncreaseIndex = state.selectedItems.findIndex(i=>i.id===action.payload.id)
+            state.selectedItems[IncreaseIndex].quantity++
             return {
                 ...state,
                 ...sumProducts(state.selectedItems)
             }
-        case "DENCREASE":
-            const index = state.selectedItems.findIndex(i=>i.id===action.payload.id)
-            state.selectedItems[index].quantity--
+        case "DECREASE":
+            const decreaseIndex = state.selectedItems.findIndex(i=>i.id===action.payload.id)
+            state.selectedItems[decreaseIndex].quantity--
             return {
                 ...state,
                 ...sumProducts(state.selectedItems)
