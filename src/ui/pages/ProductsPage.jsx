@@ -19,22 +19,25 @@ const ProductsPage = () => {
   const [loading , setLoading] = useState(true)
   const [searchParams, setSearchParams] = useSearchParams()
 
-  useEffect(() => {
-    setDisplayedProducts(products)
-    const query=getInitialQuery(searchParams)
-    setQuery(query)
-    setSearch(query.search || "")
-    setLoading(false)
-  }, [products])
+useEffect(() => {
+    if (!products.length) return
+    const initialQuery = getInitialQuery(searchParams)
+    setQuery(initialQuery)
+    setSearch(initialQuery.search || "")
 
-  useEffect(() => {
-    setLoading(true)
+    let finalProducts = searchProducts(products, initialQuery.search)
+    finalProducts = filterProducts(finalProducts, initialQuery.category)
+    setDisplayedProducts(finalProducts)
+    setLoading(false)
+}, [products])
+
+useEffect(() => {
+    if (!products.length) return  
     setSearchParams(query)
     let finalProducts = searchProducts(products, query.search)
     finalProducts = filterProducts(finalProducts, query.category)
     setDisplayedProducts(finalProducts)
-    setLoading(false)
-  }, [query])
+}, [query])
 
 
 
@@ -45,7 +48,7 @@ const ProductsPage = () => {
       <SearchBox search={search} setSearch={setSearch} setQuery={setQuery}/>
       <div className={styles.container}>
         <div className={styles.products}>
-          {displayedProducts.length === 0 && <ProductNotFound />}
+          {(displayedProducts.length === 0 && !loading) && <ProductNotFound />}
           {loading && <Loader />}
           {displayedProducts?.map(product => (
             <Card key={product.id} product={product} />
