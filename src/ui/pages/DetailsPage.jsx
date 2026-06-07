@@ -21,7 +21,7 @@ const DetailsPage = () => {
         <p className={styles.category}><SiOpenproject/> {product.category}</p>
       <div className={styles.price}>
         <span><IoMdPricetag/> {product.price} $</span>
-        <Link to={"/products"}>
+        <Link to={"/"}>
           <FaArrowLeft/>
           <span> Back to Shop</span>
         </Link>

@@ -16,8 +16,7 @@ function App() {
       <ProductsProvider>
         <Layout>
           <Routes>
-            <Route path="/" element={<Navigate to={"/products"} replace />}></Route>
-            <Route path="/products" element={<ProductsPage />} />
+            <Route path="/" element={<ProductsPage />}></Route>
             <Route path="/products/:id" element={<DetailsPage />} />
             <Route path="/checkout" element={<CheckoutPage />} />
             <Route path="/*" element={<NotFound />} />

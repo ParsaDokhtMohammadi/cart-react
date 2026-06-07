@@ -7,7 +7,7 @@ const Layout = ({ children }) => {
     return (
         <>
             <header className={styles.header}>
-                <Link to={"/products"}>PDM Shop</Link>
+                <Link to={"/"}>PDM Shop</Link>
                 <div>
                     <Link to={"/checkout"}><PiShoppingCartSimpleBold /></Link>
                     {!!state.itemsCounter && (
