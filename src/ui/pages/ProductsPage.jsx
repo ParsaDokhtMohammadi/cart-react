@@ -10,11 +10,13 @@ import { createQueryObject, filterProducts, getInitialQuery, searchProducts } fr
 import { useSearchParams } from 'react-router'
 import SearchBox from '../components/searchBox'
 import Sidebar from '../components/Sidebar'
+import ProductNotFound from './ProductNotFound'
 const ProductsPage = () => {
   const products = useProducts()
   const [search, setSearch] = useState("")
   const [displayedProducts, setDisplayedProducts] = useState([])
   const [query, setQuery] = useState({})
+  const [loading , setLoading] = useState(true)
   const [searchParams, setSearchParams] = useSearchParams()
 
   useEffect(() => {
@@ -22,14 +24,16 @@ const ProductsPage = () => {
     const query=getInitialQuery(searchParams)
     setQuery(query)
     setSearch(query.search || "")
-    
+    setLoading(false)
   }, [products])
 
   useEffect(() => {
+    setLoading(true)
     setSearchParams(query)
     let finalProducts = searchProducts(products, query.search)
     finalProducts = filterProducts(finalProducts, query.category)
     setDisplayedProducts(finalProducts)
+    setLoading(false)
   }, [query])
 
 
@@ -41,7 +45,8 @@ const ProductsPage = () => {
       <SearchBox search={search} setSearch={setSearch} setQuery={setQuery}/>
       <div className={styles.container}>
         <div className={styles.products}>
-          {displayedProducts.length === 0 && <Loader />}
+          {displayedProducts.length === 0 && <ProductNotFound />}
+          {loading && <Loader />}
           {displayedProducts?.map(product => (
             <Card key={product.id} product={product} />
           ))}
