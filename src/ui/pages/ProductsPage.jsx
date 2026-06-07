@@ -8,7 +8,7 @@ import { FaListUl } from 'react-icons/fa'
 import { useEffect } from 'react'
 import { createQueryObject, filterProducts, getInitialQuery, searchProducts } from '../../helpers/helper'
 import { useSearchParams } from 'react-router'
-import SearchBox from '../components/searchBox'
+import SearchBox from '../components/SearchBox'
 import Sidebar from '../components/Sidebar'
 import ProductNotFound from './ProductNotFound'
 const ProductsPage = () => {
