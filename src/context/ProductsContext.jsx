@@ -34,7 +34,7 @@ export const useProducts = ()=> {
 
 export const useProductDetails = (id) => {
   const products = useContext(ProductContext)
-  const res = products.find(p=>p.id===id)
+  const res = products.find(p=>p.id==id)
   return res
 }
 
